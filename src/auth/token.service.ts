@@ -30,7 +30,11 @@ export class TokenService {
     return payload.user;
   }
 
-  extractToken(authorization?: string | null): string | undefined {
+  extractToken(
+    isBearer: boolean,
+    authorization?: string | null,
+  ): string | undefined {
+    if (!isBearer) return authorization ?? undefined;
     const [type, token] = authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }

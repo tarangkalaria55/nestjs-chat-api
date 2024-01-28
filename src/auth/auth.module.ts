@@ -33,6 +33,6 @@ import { AppConfigModule, AppConfigService } from '../app-config';
     },
   ],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService, TokenService],
 })
 export class AuthModule {}
