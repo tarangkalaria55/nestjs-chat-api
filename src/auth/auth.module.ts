@@ -6,7 +6,7 @@ import { AuthController } from './auth.controller';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
-import { AppConfigModule, AppConfigService } from 'src/app-config';
+import { AppConfigModule, AppConfigService } from '../app-config';
 
 @Module({
   imports: [

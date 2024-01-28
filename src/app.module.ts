@@ -1,12 +1,19 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigModule, AppConfigService } from './app-config';
+import { AutomapperModule } from '@automapper/nestjs';
+import { classes } from '@automapper/classes';
+import { ChatModule } from './chat/chat.module';
+import { RequestLoggerMiddleware } from './middlewares/request-logger.middleware';
 
 @Module({
   imports: [
     AppConfigModule,
+    AutomapperModule.forRoot({
+      strategyInitializer: classes(),
+    }),
     TypeOrmModule.forRootAsync({
       imports: [AppConfigModule],
       inject: [AppConfigService],
@@ -26,6 +33,12 @@ import { AppConfigModule, AppConfigService } from './app-config';
     }),
     AuthModule,
     UsersModule,
+    ChatModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  // let's add a middleware on all routes
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestLoggerMiddleware).forRoutes('*');
+  }
+}

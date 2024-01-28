@@ -1,10 +1,15 @@
+import { AutoMap } from '@automapper/classes';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('users')
-export class User {
+@Entity({
+  name: 'users',
+})
+export class UserEntity {
+  @AutoMap()
   @PrimaryGeneratedColumn('increment', { name: 'id' })
   id: number;
 
+  @AutoMap()
   @Column({
     name: 'username',
     type: 'varchar',
@@ -14,6 +19,7 @@ export class User {
   })
   username: string;
 
+  @AutoMap()
   @Column({
     name: 'password',
     type: 'varchar',

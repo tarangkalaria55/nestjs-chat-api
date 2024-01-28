@@ -7,10 +7,10 @@ import {
   Post,
   Request,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { Public } from './decorators/public.decorator';
-import { SigninDto } from './dto/signin.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthService } from './auth.service';
+import { Public } from './decorators';
+import { LoginDTO, RegisterDTO } from './dto';
 
 @ApiBearerAuth()
 @Controller('auth')
@@ -20,8 +20,15 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: SigninDto) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  signIn(@Body() postObj: LoginDTO) {
+    return this.authService.signIn(postObj.username, postObj.password);
+  }
+
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @Post('register')
+  register(@Body() postObj: RegisterDTO) {
+    return this.authService.register(postObj.username, postObj.password);
   }
 
   @Get('profile')

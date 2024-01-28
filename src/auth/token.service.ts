@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/user.entity';
-import { AppConfigService } from 'src/app-config';
+import { AppConfigService } from '../app-config';
+import { UserDTO } from '../users/user.dto';
 
 type Payload = {
-  sub: any;
-  user: User;
+  sub: number;
+  user: UserDTO;
 };
 
 @Injectable()
@@ -15,7 +15,7 @@ export class TokenService {
     private configService: AppConfigService,
   ) {}
 
-  async createAsync(user: User): Promise<string> {
+  async createAsync(user: UserDTO): Promise<string> {
     const payload: Payload = { sub: user.id, user: user };
     const token = await this.jwtService.signAsync(payload, {
       secret: this.configService.JWT_TOKEN,
@@ -23,7 +23,7 @@ export class TokenService {
     return token;
   }
 
-  async verifyAsync(token: string): Promise<User> {
+  async verifyAsync(token: string): Promise<UserDTO> {
     const payload: Payload = await this.jwtService.verifyAsync(token, {
       secret: this.configService.JWT_TOKEN,
     });
