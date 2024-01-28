@@ -1,12 +1,14 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppConfigModule, AppConfigService } from './app-config';
 import { AutomapperModule } from '@automapper/nestjs';
 import { classes } from '@automapper/classes';
-import { ChatModule } from './chat/chat.module';
+import { AppConfigModule, AppConfigService } from './app-config';
 import { RequestLoggerMiddleware } from './middlewares/request-logger.middleware';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { ChatModule } from './chat/chat.module';
+import { RoomModule } from './room/room.module';
+import { SocketStoreModule } from './socket-store/socket-store.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { RequestLoggerMiddleware } from './middlewares/request-logger.middleware
     AuthModule,
     UsersModule,
     ChatModule,
+    SocketStoreModule,
+    RoomModule,
   ],
 })
 export class AppModule {

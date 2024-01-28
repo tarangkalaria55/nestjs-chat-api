@@ -1,5 +1,6 @@
 import { AutoMap } from '@automapper/classes';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { SocketStoreEntity } from 'src/socket-store/socket-store.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity({
   name: 'users',
@@ -27,4 +28,7 @@ export class UserEntity {
     nullable: false,
   })
   password: string;
+
+  @OneToMany(() => SocketStoreEntity, (m) => m.user)
+  sockets: SocketStoreEntity[];
 }
